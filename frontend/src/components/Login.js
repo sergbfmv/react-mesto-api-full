@@ -29,7 +29,7 @@ class Login extends React.Component {
 render() {
   return(
     <section className="login">
-      <Header to='/sign-up' text='Регистрация' />
+      <Header to='/' text='Регистрация' />
       <div className="login__container">
         <h2 className="login__title">Вход</h2>
         <form className="login__form" name="login" onSubmit={this.handleSubmit} noValidate>

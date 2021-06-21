@@ -6,7 +6,7 @@ function Header(props) {
 
   function signOut(){
     localStorage.removeItem('jwt');
-    history.push('/sign-in');
+    history.push('/signin');
   }
 
   return (

@@ -134,7 +134,7 @@ function App() {
     setMessageInfoTooltip('')
     setImageInfoTooltip('')
     if (check === regOk) {
-      history.push('/sign-in')
+      history.push('/signin')
     }
   }
 
@@ -200,10 +200,10 @@ function handleOnRegister (password, email) {
         <div className="page">
             <main className="reg">
               <Switch>
-                <Route path="/sign-in">
+                <Route path="/signin">
                   <Login handleLogin = {handleLogin} mail={setUserEmail} onLogin={handleOnLogin} />
                 </Route>
-                <Route path="/sign-up">
+                <Route path="/signup">
                   <Register onRegister={handleOnRegister} />
                 </Route>
                 <ProtectedRoute
@@ -220,7 +220,7 @@ function handleOnRegister (password, email) {
                   mail={userEmail}
                 />
                 <Route>
-                  {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}
+                  {loggedIn ? <Redirect to="/" /> : <Redirect to="/signin" />}
                 </Route>
               </Switch>
             </main>

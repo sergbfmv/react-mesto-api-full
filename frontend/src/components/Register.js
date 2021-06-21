@@ -31,7 +31,7 @@ class Register extends React.Component {
   render() {
   return(
     <section className="login">
-      <Header to='/sign-in' text='Войти' />
+      <Header to='/signin' text='Войти' />
       <div className="login__container">
         <h2 className="login__title">Регистрация</h2>
         <form className="login__form" name="login" onSubmit={this.handleSubmit} noValidate>
@@ -44,7 +44,7 @@ class Register extends React.Component {
             <span className="info-input-error login__placeholder-error"></span>
           </label>
           <button type="submit" name="login" className="login__button">Зарегистрироваться</button>
-          <p className="login__text">Уже зарегистрированы? <Link to='/sign-in' className="login__link">Войти</Link></p>
+          <p className="login__text">Уже зарегистрированы? <Link to='/signin' className="login__link">Войти</Link></p>
         </form>
       </div>
     </section>
