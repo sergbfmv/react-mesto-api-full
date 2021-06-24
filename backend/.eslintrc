@@ -12,6 +12,7 @@
       "object-shorthand": "off",
       "func-names": "off",
       "no-useless-escape": "off",
-      "no-unused-vars": "warn"
+      "no-unused-vars": "warn",
+      "no-console": "off"
     }
 }

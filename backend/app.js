@@ -28,12 +28,6 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
-app.post('/signin', celebrate({
-  body: Joi.object().keys({
-    password: Joi.string().required().min(2).max(30),
-    email: Joi.string().required().email(),
-  }),
-}), login);
 app.post('/signup', celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30),
@@ -44,6 +38,13 @@ app.post('/signup', celebrate({
   }),
 }), createUser);
 
+app.post('/signin', celebrate({
+  body: Joi.object().keys({
+    password: Joi.string().required().min(2).max(30),
+    email: Joi.string().required().email(),
+  }),
+}), login);
+
 app.use('/', require('./routes/users'));
 app.use('/', require('./routes/cards'));
 app.use('/', require('./routes/notFound'));
@@ -52,7 +53,7 @@ app.use(errorLogger);
 
 app.use(errors());
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   const { statusCode = 500, message } = err;
   return res.status(statusCode).send({
     message: statusCode === 500
