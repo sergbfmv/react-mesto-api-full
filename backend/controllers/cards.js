@@ -1,6 +1,6 @@
 const CastError = require('../errors/cast-error');
-const ForbiddenError = require('../errors/forbidden-error');
 const ValidationError = require('../errors/validation-error');
+const ForbiddenError = require('../errors/forbidden-error');
 const Card = require('../models/card');
 
 module.exports.getCards = (req, res, next) => {
@@ -26,19 +26,22 @@ module.exports.createCard = (req, res, next) => {
 module.exports.deleteCard = (req, res, next) => {
   Card.findById(req.params.cardId)
     .then((card) => {
-      if (card.owner === req.user._id) {
-        Card.findByIdAndRemove(req.params.cardId)
-          .then((user) => res.send({ data: user }))
-          .catch((err) => {
-            if (err.name === 'CastError') {
-              const error = new CastError('Карточка с указанным id не найдена');
-              next(error);
-            } else {
-              next(err);
-            }
-          });
+      if (card === null) {
+        throw new CastError('Карточка не найдена');
       }
-      return Promise.reject(new Error('Нельзя удалять чужие карточки!'));
+      if (card.owner === req.user._id) {
+        throw new ForbiddenError('Нельзя удалять чужие карточки!');
+      }
+      Card.findByIdAndRemove(req.params.cardId)
+        .then((user) => res.send({ data: user }))
+        .catch((err) => {
+          if (err.name === 'CastError') {
+            const error = new CastError('Карточка с указанным id не найдена');
+            next(error);
+          } else {
+            next(err);
+          }
+        });
     })
     .catch((err) => {
       if (err.name === 'TypeError') {
