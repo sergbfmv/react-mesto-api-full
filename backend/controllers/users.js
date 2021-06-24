@@ -5,6 +5,7 @@ const ValidationError = require('../errors/validation-error');
 const CastError = require('../errors/cast-error');
 const ForbiddenError = require('../errors/forbidden-error');
 const MongoError = require('../errors/mongo-error');
+const AuthError = require('../errors/auth-error');
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
@@ -139,18 +140,9 @@ module.exports.login = (req, res, next) => {
       res.send({ token });
       next();
     })
-    .catch((err) => {
-      if (err.name === 'ValidationError') {
-        const error = new ValidationError('Переданы некорректные данные пользователя');
-        next(error);
-      } else if (err.name === 'CastError') {
-        const error = new CastError('Пользователь с указанным id не найден');
-        next(error);
-      } else if (err.name === 'TypeError') {
-        const error = new ForbiddenError('Нельзя редактировать чужого пользователя!');
-        next(error);
-      } else {
-        next(err);
-      }
-    });
+    .catch(() => {
+      const error = new AuthError('Невозможно авторизоваться');
+      next(error);
+    })
+    .catch(next);
 };
